@@ -21,12 +21,6 @@ case class Ant(totalPos :Int, origPos :Int, pos :Int, speed :Int) {
   override def toString = "Ant #" + origPos + " @" + pos
 }
 
-object Ant {
-
-  
-
-}
-
 case class Ring(ants :Seq[Ant]) {
 
   def this(totalPos :Int) = this(for (p <- Range(0, totalPos)) yield Ant(totalPos, p, p, 1))
