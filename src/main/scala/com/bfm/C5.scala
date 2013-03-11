@@ -1,8 +1,10 @@
 package com.bfm
 
-case class Ant(totalPos :Int, pos :Int, speed :Int) {
+case class Ant(totalPos :Int, origPos :Int, pos :Int, speed :Int) {
 
-  def speedUp = Ant(totalPos, pos, 1 + speed)
+  lazy val direction = if (origPos != 0 && origPos != 1 && Prime.is(origPos)) -1 else 1
+
+  def speedUp = Ant(totalPos, origPos, pos, 1 + speed)
 
   def effStep(s :Int) :Int = if (s < 0) {
     effStep(s + totalPos)
@@ -11,15 +13,23 @@ case class Ant(totalPos :Int, pos :Int, speed :Int) {
   } else s
 
   def step = {
-    val s = effStep(if (pos != 0 && pos != 1 && Prime.is(pos)) -speed else speed)
+    val s = effStep(direction * speed)
     val nextPos = (pos + s) % totalPos
-    Ant(totalPos, nextPos, speed)
+    Ant(totalPos, origPos, nextPos, speed)
   }
+
+  override def toString = "Ant #" + origPos + " @" + pos
+}
+
+object Ant {
+
+  
+
 }
 
 case class Ring(ants :Seq[Ant]) {
 
-  def this(totalPos :Int) = this(for (p <- Range(0, totalPos)) yield Ant(totalPos, p, 1))
+  def this(totalPos :Int) = this(for (p <- Range(0, totalPos)) yield Ant(totalPos, p, p, 1))
 
   def step = {
     val nextAnts = ants map (_.step)
@@ -34,11 +44,11 @@ case class Ring(ants :Seq[Ant]) {
 }
 
 object C5 extends App {
-  var r = new Ring(5)
+  var r = new Ring(args(1).toInt)
   var cnt = 0;
   do {
     r = r.step; 
     cnt = cnt + 1
-    println(cnt + ": " + r)
-  } while (!r.isBalanced && cnt < 100)
+    println(cnt + ": " + r + ": " + (if (r.isBalanced) "balanced" else "not balanced"))
+  } while (!r.isBalanced)
 }
