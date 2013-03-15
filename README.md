@@ -25,6 +25,6 @@ Bottom:                                                             Top:
 12 03 04 05 18   37 28 29 30 43   62 53 54 55 68   87 78 79 80 93   112 103 104 105 118
 13 14 15 16 17   38 39 40 41 42   63 64 65 66 67   88 89 90 91 92   113 114 115 116 117
 
-The sum of the elements on the 4 diagonals is 1061.
+The sum of the elements on the 4 diagonals is 1051.
 
 What is the sum of the elements on the 4 diagonals of a 25x25x25 cube?
